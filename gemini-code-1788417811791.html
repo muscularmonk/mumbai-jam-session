@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aqua Di Monte - Claim Your Complimentary 1LTR Bottle</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #0d253f;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #waterCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .form-container, .thank-you-container {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 30px 25px;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .brand-header {
+      margin-bottom: 20px;
+    }
+    .logo {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 8px;
+    }
+    .brand-tagline {
+      font-size: 12px;
+      font-weight: bold;
+      color: #0d3b66;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #0d3b66;
+      display: inline-block;
+    }
+    .brand-usp {
+      font-size: 9px;
+      color: #0d3b66;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 8px 0 0 0;
+      font-weight: bold;
+    }
+    .main-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #0d3b66;
+      margin: 15px 0 10px 0;
+    }
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+      color: #222;
+      font-size: 13px;
+    }
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.95);
+    }
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+      background: #ffffff;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0d3b66;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .thank-you-container {
+      display: none;
+    }
+    .thank-you-container h2 {
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="waterCanvas"></canvas>
+
+  <div class="form-container" id="leadFormContainer">
+    <div class="brand-header">
+      <img src="watermarked_img_16071092884030995913.png" alt="Aqua Di Monte Logo" class="logo" id="brandLogo" />
+      <br />
+      <p class="brand-tagline">Natural Mineral Water</p>
+      <p class="brand-usp">FROM THE MOUNTAINS</p>
+      <p class="brand-usp" style="font-size: 8px; margin-top: 4px;">HIMALAYAS • ALKALINE • NATURAL • pH BALANCED</p>
+    </div>
+
+    <h2 class="main-title">Claim Your Free 1LTR Bottle</h2>
+
+    <form id="leadForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="John Doe" required />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="+1234567890" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="john@example.com" required />
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" placeholder="City, Country" required />
+      </div>
+
+      <button type="submit" id="submitBtn">Get My Free Bottle</button>
+    </form>
+  </div>
+
+  <div class="thank-you-container" id="thankYouContainer">
+    <div class="brand-header">
+      <img src="watermarked_img_16071092884030995913.png" alt="Aqua Di Monte Logo" class="logo" />
+    </div>
+    <h2>Thank You, <span id="userLeadName"></span>!</h2>
+    <p class="thank-you-message">
+      Welcome to the pure side of hydration! 💧 Your details are locked in. Your complimentary bottle of premium natural mineral water is on its way to you.
+    </p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('waterCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const streams = [];
+    for (let i = 0; i < 60; i++) {
+      streams.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        length: 80 + Math.random() * 120,
+        speed: 1.5 + Math.random() * 2.5,
+        width: 1 + Math.random() * 2.5,
+        opacity: 0.1 + Math.random() * 0.3,
+        curve: (Math.random() - 0.5) * 30
+      });
+    }
+
+    let offset = 0;
+    function renderWater() {
+      offset += 0.02;
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
+      bgGrad.addColorStop(0, '#0a1d37');
+      bgGrad.addColorStop(0.5, '#023e8a');
+      bgGrad.addColorStop(1, '#0077b6');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      streams.forEach((s) => {
+        s.y += s.speed;
+        if (s.y - s.length > height) {
+          s.y = -s.length;
+          s.x = Math.random() * width;
+        }
+        const waveX = Math.sin(offset + s.y * 0.005) * s.curve;
+        const streamGrad = ctx.createLinearGradient(s.x + waveX, s.y - s.length, s.x + waveX, s.y);
+        streamGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        streamGrad.addColorStop(0.5, `rgba(180, 230, 255, ${s.opacity})`);
+        streamGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        ctx.beginPath();
+        ctx.strokeStyle = streamGrad;
+        ctx.lineWidth = s.width;
+        ctx.moveTo(s.x + waveX, s.y - s.length);
+        ctx.quadraticCurveTo(s.x + waveX + s.curve, s.y - s.length / 2, s.x + waveX, s.y);
+        ctx.stroke();
+      });
+
+      requestAnimationFrame(renderWater);
+    }
+    renderWater();
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyrdIWisPsqHbXiq7xgxMIZ_uYgYYfyI2s67g6A_YeAVzkWJAOtEu9jEsSSrTzLuYfpg/exec';
+
+    document.getElementById('leadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting...';
+
+      const formData = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        location: document.getElementById('location').value
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(() => {
+        document.getElementById('userLeadName').textContent = formData.name;
+        document.getElementById('leadFormContainer').style.display = 'none';
+        document.getElementById('thankYouContainer').style.display = 'block';
+      })
+      .catch(error => {
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Get My Free Bottle';
+      });
+    });
+  </script>
+</body>
+</html>
