@@ -1,130 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aqua Di Monte - Claim Your Complimentary 1LTR Bottle</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      background-color: #03101e;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-    }
+<div style="text-align: center; margin: 20px 0;">
+  <canvas id="qrCodeCanvas"></canvas>
+</div>
 
-    /* Full-Screen Live HD Himalayan Water Shader Canvas */
-    #glCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-    }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
-    /* Ambient Mountain Mist Overlays */
-    .mist-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.15) 0%, rgba(3, 16, 30, 0.65) 80%);
-    }
-
-    /* Glassmorphism Form Container floating above water */
-    .form-container, .thank-you-container {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: 32px 28px;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 180, 216, 0.3);
-      width: 100%;
-      max-width: 410px;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-    }
-
-    .brand-header {
-      margin-bottom: 20px;
-    }
-    .brand-tagline {
-      font-size: 12px;
-      font-weight: bold;
-      color: #0d3b66;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin: 0;
-      padding-bottom: 4px;
-      border-bottom: 2px solid #0d3b66;
-      display: inline-block;
-    }
-    .brand-usp {
-      font-size: 9px;
-      color: #0d3b66;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 8px 0 0 0;
-      font-weight: bold;
-    }
-    .main-title {
-      font-size: 19px;
-      font-weight: bold;
-      color: #0d3b66;
-      margin: 16px 0 12px 0;
-    }
-    .form-group {
-      margin-bottom: 12px;
-      text-align: left;
-    }
-    label {
-      display: block;
-      margin-bottom: 4px;
-      font-weight: bold;
-      color: #1a252c;
-      font-size: 13px;
-    }
-    input {
-      width: 100%;
-      padding: 11px 13px;
-      border: 1px solid #c0d1e0;
-      border-radius: 8px;
-      font-size: 14px;
-      background: rgba(255, 255, 255, 0.95);
-      transition: all 0.2s ease;
-    }
-    input:focus {
-      border-color: #0077b6;
-      outline: none;
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.2);
-    }
-    button {
-      width: 100%;
-      padding: 13px;
-      background: linear-gradient(135deg, #0d3b66 0%, #0077b6 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
+<script>
+  // Generate QR Code dynamically
+  const qr = new QRious({
+    element: document.getElementById('qrCodeCanvas'),
+    value: 'https://aquadimonte-pnzkb15.public.builtwithrocket.new',
+    size: 200,
+    level: 'H',
+    foreground: '#0d3b66',
+    background: '#ffffff'
+  });
+</script>
