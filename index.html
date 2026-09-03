@@ -3,24 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Water in Multiple Himalayan Springs Found to Be Contaminated - Research Matters</title>
+  <title>Aqua Di Monte - Claim Your Complimentary 1LTR Bottle</title>
   <style>
     * {
       box-sizing: border-box;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      font-family: Arial, sans-serif;
     }
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
       background-color: #03101e;
-      color: #2c3e50;
-      overflow-x: hidden;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
     }
 
-    /* Fixed Background Wrapper */
-    .bg-wrapper {
+    /* Full-Screen Live HD Himalayan Water Shader Canvas */
+    #glCanvas {
       position: fixed;
       top: 0;
       left: 0;
@@ -28,73 +34,96 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      overflow: hidden;
-      background: linear-gradient(180deg, #021329 0%, #0077b6 100%);
     }
 
-    /* Base Himalayan Mountain Image */
-    .bg-wrapper img {
-      position: absolute;
+    /* Ambient Mountain Mist Overlays */
+    .mist-layer {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: url(#waterDisplacement);
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.08) 0%, rgba(3, 16, 30, 0.45) 80%);
     }
 
-    /* SVG Filter Canvas Container */
-    svg.filters {
-      position: absolute;
-      width: 0;
-      height: 0;
-    }
-
-    /* Article Wrapper */
-    .page-container {
-      position: relative;
-      z-index: 10;
-      max-width: 860px;
-      margin: 30px auto;
-      padding: 0 15px 40px 15px;
-    }
-
-    /* News Publisher Header Bar */
-    .news-header {
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 12px 12px 0 0;
-      padding: 15px 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 3px solid #0077b6;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .news-logo {
-      font-size: 22px;
-      font-weight: 800;
-      color: #0d3b66;
-      letter-spacing: -0.5px;
-    }
-    .news-logo span {
-      color: #0077b6;
-    }
-    .news-tag {
-      background: #e1f5fe;
-      color: #0288d1;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    /* Article Body Card */
-    .article-card {
-      background: rgba(255, 255, 255, 0.92);
+    /* Glassmorphism Form Container floating above water */
+    .form-container, .thank-you-container {
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 35px 30px;
-      border-radius: 0
+      padding: 32px 28px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 180, 216, 0.3);
+      width: 100%;
+      max-width: 410px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .brand-header {
+      margin-bottom: 20px;
+    }
+    .logo {
+      max-width: 210px;
+      height: auto;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    }
+    .brand-tagline {
+      font-size: 12px;
+      font-weight: bold;
+      color: #0d3b66;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #0d3b66;
+      display: inline-block;
+    }
+    .brand-usp {
+      font-size: 9px;
+      color: #0d3b66;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 8px 0 0 0;
+      font-weight: bold;
+    }
+    .main-title {
+      font-size: 19px;
+      font-weight: bold;
+      color: #0d3b66;
+      margin: 16px 0 12px 0;
+    }
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+      color: #1a252c;
+      font-size: 13px;
+    }
+    input {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid #c0d1e0;
+      border-radius: 8px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.95);
+      transition: all 0.2s ease;
+    }
+    input:focus {
+      border-color: #0077b6;
+      outline: none;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.2);
+    }
+    button {
+      width: 100%;
+      padding
