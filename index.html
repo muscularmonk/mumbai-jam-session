@@ -3,30 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aqua Di Monte - Claim Your Complimentary 1LTR Bottle</title>
+  <title>Water in Multiple Himalayan Springs Found to Be Contaminated - Research Matters</title>
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
     }
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
       background-color: #03101e;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
+      color: #2c3e50;
+      overflow-x: hidden;
     }
 
-    /* Full-Screen Live HD Himalayan Water Shader Canvas */
-    #glCanvas {
+    /* Fixed Background Wrapper */
+    .bg-wrapper {
       position: fixed;
       top: 0;
       left: 0;
@@ -34,341 +28,132 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
+      overflow: hidden;
     }
 
-    /* Ambient Mountain Mist Overlays */
-    .mist-layer {
-      position: fixed;
+    /* Base Himalayan Mountain Image */
+    .bg-wrapper img {
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.15) 0%, rgba(3, 16, 30, 0.65) 80%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    /* Glassmorphism Form Container floating above water */
-    .form-container, .thank-you-container {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: 32px 28px;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 180, 216, 0.3);
+    /* WebGL Flowing River Layer Overlay */
+    #waterCanvas {
+      position: absolute;
+      bottom: 0;
+      left: 0;
       width: 100%;
-      max-width: 410px;
-      text-align: center;
+      height: 65%;
+      mix-blend-mode: soft-light;
+      opacity: 0.85;
+    }
+
+    /* News Article Page Wrapper */
+    .page-container {
       position: relative;
       z-index: 10;
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      max-width: 860px;
+      margin: 30px auto;
+      padding: 0 15px 40px 15px;
     }
 
-    .brand-header {
-      margin-bottom: 20px;
+    /* News Header Bar */
+    .news-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 12px 12px 0 0;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #0077b6;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .logo {
-      max-width: 210px;
-      height: auto;
-      margin-bottom: 8px;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    .news-logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0d3b66;
+      letter-spacing: -0.5px;
     }
-    .brand-tagline {
-      font-size: 12px;
+    .news-logo span {
+      color: #0077b6;
+    }
+    .news-tag {
+      background: #e1f5fe;
+      color: #0288d1;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
       font-weight: bold;
-      color: #0d3b66;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      margin: 0;
-      padding-bottom: 4px;
-      border-bottom: 2px solid #0d3b66;
-      display: inline-block;
     }
-    .brand-usp {
-      font-size: 9px;
-      color: #0d3b66;
+
+    /* Article Card */
+    .article-card {
+      background: rgba(255, 255, 255, 0.91);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 35px 30px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+      line-height: 1.7;
+    }
+
+    .category-link {
+      color: #0077b6;
+      font-size: 13px;
+      font-weight: bold;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin: 8px 0 0 0;
-      font-weight: bold;
     }
-    .main-title {
-      font-size: 19px;
+
+    .article-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0a1d37;
+      margin: 10px 0 15px 0;
+      line-height: 1.3;
+    }
+
+    .meta-bar {
+      font-size: 12px;
+      color: #666;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .article-content p {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 18px;
+    }
+
+    /* Embedded Offer Section */
+    .offer-callout {
+      background: linear-gradient(135deg, rgba(240, 248, 255, 0.95) 0%, rgba(225, 245, 254, 0.95) 100%);
+      border: 2px dashed #0077b6;
+      border-radius: 12px;
+      padding: 25px 20px;
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .brand-header-mini {
+      margin-bottom: 15px;
+    }
+    .brand-header-mini img {
+      max-width: 180px;
+      height: auto;
+    }
+    .brand-tagline {
+      font-size: 11px;
       font-weight: bold;
       color: #0d3b66;
-      margin: 16px 0 12px 0;
-    }
-    .form-group {
-      margin-bottom: 12px;
-      text-align: left;
-    }
-    label {
-      display: block;
-      margin-bottom: 4px;
-      font-weight: bold;
-      color: #1a252c;
-      font-size: 13px;
-    }
-    input {
-      width: 100%;
-      padding: 11px 13px;
-      border: 1px solid #c0d1e0;
-      border-radius: 8px;
-      font-size: 14px;
-      background: rgba(255, 255, 255, 0.95);
-      transition: all 0.2s ease;
-    }
-    input:focus {
-      border-color: #0077b6;
-      outline: none;
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.2);
-    }
-    button {
-      width: 100%;
-      padding: 13px;
-      background: linear-gradient(135deg, #0d3b66 0%, #0077b6 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 15px rgba(13, 59, 102, 0.4);
-    }
-    button:disabled {
-      background: #90caf9;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    button:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(0, 119, 182, 0.5);
-    }
-    .thank-you-container {
-      display: none;
-    }
-    .thank-you-container h2 {
-      color: #2b9348;
-      margin-top: 10px;
-    }
-    .thank-you-message {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #2b2b2b;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- WebGL Dynamic Water Live Wallpaper -->
-  <canvas id="glCanvas"></canvas>
-  <div class="mist-layer"></div>
-
-  <!-- Lead Form -->
-  <div class="form-container" id="leadFormContainer">
-    <div class="brand-header">
-      <img src="watermarked_img_16071092884030995913.png" alt="Aqua Di Monte Logo" class="logo" id="brandLogo" />
-      <br />
-      <p class="brand-tagline">Natural Mineral Water</p>
-      <p class="brand-usp">FROM THE HIMALAYAS</p>
-      <p class="brand-usp" style="font-size: 8px; margin-top: 4px;">ALKALINE • PURE MOUNTAIN SPRING • pH BALANCED</p>
-    </div>
-
-    <h2 class="main-title">Claim Your Free 1LTR Bottle</h2>
-
-    <form id="leadForm">
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" placeholder="John Doe" required />
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" placeholder="+1234567890" required />
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="john@example.com" required />
-      </div>
-
-      <div class="form-group">
-        <label for="location">Location</label>
-        <input type="text" id="location" name="location" placeholder="City, Country" required />
-      </div>
-
-      <button type="submit" id="submitBtn">Get My Free Bottle</button>
-    </form>
-  </div>
-
-  <!-- Thank You Container -->
-  <div class="thank-you-container" id="thankYouContainer">
-    <div class="brand-header">
-      <img src="watermarked_img_16071092884030995913.png" alt="Aqua Di Monte Logo" class="logo" />
-    </div>
-    <h2>Thank You, <span id="userLeadName"></span>!</h2>
-    <p class="thank-you-message">
-      Welcome to the pure side of hydration! 💧 Your details are locked in. Your complimentary bottle of premium Himalayan natural mineral water is on its way to you.
-    </p>
-  </div>
-
-  <script>
-    // Live Himalayan HD Water Shader Engine
-    const canvas = document.getElementById('glCanvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-
-    if (gl) {
-      const vsSource = `
-        attribute vec2 aPosition;
-        void main() {
-          gl_Position = vec4(aPosition, 0.0, 1.0);
-        }
-      `;
-
-      const fsSource = `
-        precision highp float;
-        uniform vec2 uResolution;
-        uniform float uTime;
-
-        float hash(vec2 p) {
-          return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
-        }
-
-        float noise(vec2 p) {
-          vec2 i = floor(p);
-          vec2 f = fract(p);
-          f = f * f * (3.0 - 2.0 * f);
-          return mix(
-            mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
-            mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x),
-            f.y
-          );
-        }
-
-        float fbm(vec2 p) {
-          float v = 0.0;
-          float a = 0.5;
-          for (int i = 0; i < 4; i++) {
-            v += a * noise(p);
-            p *= 2.0;
-            a *= 0.5;
-          }
-          return v;
-        }
-
-        void main() {
-          vec2 uv = gl_FragCoord.xy / uResolution.xy;
-          vec2 p = (gl_FragCoord.xy - 0.5 * uResolution.xy) / uResolution.y;
-
-          // Downward river flow motion speed
-          float t = uTime * 0.45;
-          vec2 flow = vec2(0.0, -t);
-
-          // Simulated water wave distortion
-          float wave1 = fbm(p * 3.0 + flow + vec2(sin(t * 0.5), 0.0));
-          float wave2 = fbm(p * 6.0 - flow * 1.2 + vec2(wave1));
-
-          // Mountain glacier water blues
-          vec3 deepBlue = vec3(0.02, 0.12, 0.28);
-          vec3 glacialAqua = vec3(0.0, 0.55, 0.82);
-          vec3 foamWhite = vec3(0.85, 0.96, 1.0);
-
-          vec3 color = mix(deepBlue, glacialAqua, wave1);
-          color = mix(color, foamWhite, pow(wave2, 2.5) * 0.7);
-
-          // Caustic shimmer highlight
-          float caustic = pow(fbm(p * 12.0 + vec2(wave2, t * 0.8)), 3.0);
-          color += vec3(0.3, 0.7, 0.9) * caustic * 1.5;
-
-          gl_FragColor = vec4(color, 1.0);
-        }
-      `;
-
-      function createShader(gl, type, source) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        return shader;
-      }
-
-      const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
-      const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
-      const program = gl.createProgram();
-      gl.attachShader(program, vs);
-      gl.attachShader(program, fs);
-      gl.linkProgram(program);
-      gl.useProgram(program);
-
-      const positionBuffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-        -1, -1,  1, -1, -1,  1,
-        -1,  1,  1, -1,  1,  1,
-      ]), gl.STATIC_DRAW);
-
-      const aPosition = gl.getAttribLocation(program, 'aPosition');
-      gl.enableVertexAttribArray(aPosition);
-      gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
-
-      const uResolution = gl.getUniformLocation(program, 'uResolution');
-      const uTime = gl.getUniformLocation(program, 'uTime');
-
-      function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-      }
-      window.addEventListener('resize', resize);
-      resize();
-
-      function render(time) {
-        gl.uniform2f(uResolution, canvas.width, canvas.height);
-        gl.uniform1f(uTime, time * 0.001);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-        requestAnimationFrame(render);
-      }
-      requestAnimationFrame(render);
-    }
-
-    // Form Submission Handler
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyrdIWisPsqHbXiq7xgxMIZ_uYgYYfyI2s67g6A_YeAVzkWJAOtEu9jEsSSrTzLuYfpg/exec';
-
-    document.getElementById('leadForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerText = 'Submitting...';
-
-      const formData = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        location: document.getElementById('location').value
-      };
-
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-      .then(() => {
-        document.getElementById('userLeadName').textContent = formData.name;
-        document.getElementById('leadFormContainer').style.display = 'none';
-        document.getElementById('thankYouContainer').style.display = 'block';
-      })
-      .catch(error => {
-        alert('An error occurred. Please try again.');
-        console.error('Error!', error.message);
-        submitBtn.disabled = false;
-        submitBtn.innerText = 'Get My Free Bottle';
-      });
-    });
-  </script>
-
-</body>
-</html>
+      text-transform: uppercase;
+      letter
